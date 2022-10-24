@@ -1,0 +1,304 @@
+/* ================================= 
+  Navbar
+==================================== */
+
+* {
+	box-sizing: border-box;
+}
+body {
+	font-family: 'Montserrat', sans-serif;
+	line-height: 1.6;
+	margin: 0;
+	min-height: 100vh;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+h2,
+h3,
+a {
+	color: #eee;
+	font-family: sans-serif;
+	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+}
+
+.logo {
+	margin: 0;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.main-nav {
+	margin-top: 5px;
+}
+.logo a,
+.main-nav a {
+	padding: 5px 15px;
+	text-transform: uppercase;
+	text-align: center;
+	display: block;
+}
+
+nav ul li a:hover {
+	color: #08d;
+}
+
+.header {
+	width: 100%;
+	background-color: #15172b;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	color: #eee;
+	font-family: sans-serif;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/* ================================= 
+  Media Queries
+==================================== */
+
+@media (min-width: 769px) {
+	.header,
+	.main-nav {
+		display: flex;
+	}
+	.header {
+		flex-direction: column;
+		align-items: center;
+	}
+	.header {
+		width: 100%;
+		margin: 0 auto;
+		max-width: 1500px;
+	}
+}
+
+@media (min-width: 1025px) {
+	.header {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+}
+
+/* ================================= 
+  REGISTRAZIONE-LOGIN
+==================================== */
+
+html {
+	background-color: black;
+}
+
+body#reg-log {
+	align-items: center;
+	background-color: #000;
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+}
+
+.form {
+	background-color: #15172b;
+	border-radius: 20px;
+	box-sizing: border-box;
+	height: 440px;
+	padding: 20px;
+	width: 320px;
+	margin-bottom: 100px;
+}
+
+.title {
+	color: #eee;
+	font-family: sans-serif;
+	font-size: 36px;
+	font-weight: 600;
+	margin-top: 30px;
+}
+
+.subtitle {
+	color: #eee;
+	font-family: sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	margin-top: 10px;
+}
+
+.input-container {
+	height: 50px;
+	position: relative;
+	width: 100%;
+}
+
+.ic1 {
+	margin-top: 40px;
+}
+
+.ic2 {
+	margin-top: 30px;
+}
+
+.input {
+	background-color: #303245;
+	border-radius: 12px;
+	border: 0;
+	box-sizing: border-box;
+	color: #eee;
+	font-size: 18px;
+	height: 100%;
+	outline: 0;
+	padding: 4px 20px 0;
+	width: 100%;
+}
+
+.cut {
+	background-color: #15172b;
+	border-radius: 10px;
+	height: 20px;
+	left: 20px;
+	position: absolute;
+	top: -20px;
+	transform: translateY(0);
+	transition: transform 200ms;
+	width: 53px;
+}
+
+.cut-short {
+	width: 75px;
+}
+
+.input:focus ~ .cut,
+.input:not(:placeholder-shown) ~ .cut {
+	transform: translateY(8px);
+}
+
+.placeholder {
+	color: #65657b;
+	font-family: sans-serif;
+	left: 20px;
+	line-height: 14px;
+	pointer-events: none;
+	position: absolute;
+	transform-origin: 0 50%;
+	transition: transform 200ms, color 200ms;
+	top: 20px;
+}
+
+.input:focus ~ .placeholder,
+.input:not(:placeholder-shown) ~ .placeholder {
+	transform: translateY(-30px) translateX(10px) scale(0.75);
+}
+
+.input:not(:placeholder-shown) ~ .placeholder {
+	color: #808097;
+}
+
+.input:focus ~ .placeholder {
+	color: #dc2f55;
+}
+
+.submit {
+	background-color: #08d;
+	border-radius: 12px;
+	border: 0;
+	box-sizing: border-box;
+	color: #eee;
+	cursor: pointer;
+	font-size: 18px;
+	height: 50px;
+	margin-top: 38px;
+	outline: 0;
+	text-align: center;
+	width: 100%;
+}
+
+.submit:active {
+	background-color: #06b;
+}
+
+/* ================================= 
+  TIMBRO
+==================================== */
+
+.button {
+	background-color: #08d;
+	border-radius: 12px;
+	border: 0;
+	color: black;
+	cursor: pointer;
+	font-size: 18px;
+	height: 70px;
+	margin-top: 60px;
+	outline: 0;
+	text-align: center;
+	width: 20%;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 40px;
+}
+
+body#reg-log {
+	align-items: center;
+	background-color: #000;
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+}
+
+table {
+	border-collapse: collapse;
+	font-family: Tahoma, Geneva, sans-serif;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	color: white;
+}
+
+table th {
+	background-color: #08d;
+	color: black;
+	font-weight: bold;
+	font-size: 20px;
+	border: 1px solid black;
+	padding: 5px;
+}
+
+.poche-ore {
+	padding: 5px;
+	background-color: rgb(243, 103, 103);
+}
+
+.tante-ore {
+	padding: 5px;
+	background-color: rgb(82, 163, 82);
+}
+
+/* ================================= 
+  CALENDARIO
+==================================== */
+
+.react-calendar__month-view__weekdays {
+	color: gray;
+}
+
+.react-calendar__navigation button {
+	font-size: 1em;
+}
+
+.Row {
+	display: table;
+	width: 100%; /*Optional*/
+	table-layout: fixed; /*Optional*/
+	border-spacing: 30px; /*Optional*/
+}
+
+.Column {
+	display: table-cell;
+}
