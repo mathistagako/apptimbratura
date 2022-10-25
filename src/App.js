@@ -61,7 +61,10 @@ export default function App() {
 					element={<Registrazione register={register} />}
 				></Route>
 				<Route path="/login" element={<Login login={signIn} />}></Route>
-				<Route path="/timbro" element={<Timbro />}></Route>
+				<Route
+					path="/timbro"
+					element={isLogged ? <Timbro /> : <Login login={signIn} />}
+				></Route>
 			</Route>
 		</Routes>
 	);
