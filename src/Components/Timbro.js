@@ -1,8 +1,79 @@
-import React from 'react';
+import { getAuth } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { db } from './Firebase';
 
 const Timbro = () => {
+	const d = new Date().toLocaleDateString();
+	const Ref = db
+		.collection('users')
+		.doc(getAuth().currentUser.email)
+		.collection('giornate')
+		.doc(d.replace('/', ' ').replace('/', ''));
+
+	const checkEntrata = () => {
+		let d = new Date().toLocaleDateString();
+		let time = new Date().toLocaleTimeString();
+
+		Ref.get().then((docSnapshot) => {
+			if (docSnapshot.exists) {
+				console.log('Gia timbrato');
+			} else {
+				db.collection('users')
+					.doc(getAuth().currentUser.email)
+					.collection('giornate')
+					.doc(d.replace('/', ' ').replace('/', ''))
+					.set({
+						date: d,
+						orarioEntrata: time,
+						orarioUscita: 0,
+					});
+
+				console.log(d.replace('/', '').replace('/', ''));
+				console.log(time);
+				console.log(getAuth().currentUser.email);
+			}
+		});
+	};
+
+	const checkUscita = async () => {
+		let d = new Date().toLocaleDateString();
+		let time = new Date().toLocaleTimeString();
+		let oreSuperate;
+
+		Ref.get().then((docSnapshot) => {
+			console.log(docSnapshot);
+			if (docSnapshot.get('orarioUscita') !== 0) {
+				console.log('Gia timbrato');
+			} else {
+				let orarioEntrata = docSnapshot.get('orarioEntrata');
+				let oreLavorate =
+					parseInt(time.split(':'), 10) -
+					parseInt(orarioEntrata.split(':'), 10);
+
+				if (oreLavorate >= 8) {
+					oreSuperate = true;
+				} else if (oreLavorate < 8) {
+					oreSuperate = false;
+				}
+
+				db.collection('users')
+					.doc(getAuth().currentUser.email)
+					.collection('giornate')
+					.doc(d.replace('/', ' ').replace('/', ''))
+					.update({
+						orarioUscita: time,
+						oreLavorativeMinimeRaggiunte: oreSuperate,
+					});
+
+				console.log(d.replace('/', '').replace('/', ''));
+				console.log(time);
+				console.log(getAuth().currentUser.email);
+			}
+		});
+	};
+
 	return (
 		<div>
 			<div>
@@ -13,10 +84,10 @@ const Timbro = () => {
 						</div>
 						<div className="Column">
 							<p style={{ textAlign: 'center' }}>
-								<button className="button" onClick>
+								<button className="button" onClick={checkEntrata}>
 									Timbra cartellino entrata
 								</button>
-								<button className="button" onClick>
+								<button className="button" onClick={checkUscita}>
 									Timbra cartellino uscita
 								</button>
 							</p>

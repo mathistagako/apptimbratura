@@ -6,7 +6,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
-import { auth } from './Components/Firebase';
+import { auth, db } from './Components/Firebase';
 import Layout from './Components/Layout';
 import Login from './Components/Login';
 import Registrazione from './Components/Registrazione';
@@ -37,6 +37,9 @@ export default function App() {
 	const register = (email, password) => {
 		auth.createUserWithEmailAndPassword(email, password).then((response) => {
 			console.log(response);
+			db.collection('users').doc(email).set({
+				email: email,
+			});
 		});
 	};
 
