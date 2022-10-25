@@ -5,12 +5,30 @@ import 'react-calendar/dist/Calendar.css';
 import { db } from './Firebase';
 
 const Timbro = () => {
+	const [giornate, setGiornate] = useState([]);
+
 	const d = new Date().toLocaleDateString();
 	const Ref = db
 		.collection('users')
 		.doc(getAuth().currentUser.email)
 		.collection('giornate')
 		.doc(d.replace('/', ' ').replace('/', ''));
+
+	useEffect(() => {
+		const unsubscribe = db
+			.collection('users')
+			.doc(getAuth().currentUser.email)
+			.collection('giornate')
+			.onSnapshot((snapshot) =>
+				setGiornate(
+					snapshot.docs.map((doc) => ({
+						id: doc.id,
+						data: doc.data(),
+					}))
+				)
+			);
+		return unsubscribe;
+	}, []);
 
 	const checkEntrata = () => {
 		let d = new Date().toLocaleDateString();
@@ -35,6 +53,8 @@ const Timbro = () => {
 				console.log(getAuth().currentUser.email);
 			}
 		});
+
+		console.log(giornate);
 	};
 
 	const checkUscita = async () => {
@@ -104,7 +124,23 @@ const Timbro = () => {
 									<th>Uscita</th>
 									<th>Giornata</th>
 								</tr>
-								<tr></tr>
+								{giornate.map(({ id, data }) => (
+									<tr key={id}>
+										<td style={{ padding: '5px' }}>{data.orarioEntrata}</td>
+										<td style={{ padding: '5px' }}>
+											{data.orarioUscita === 0 ? '' : data.orarioUscita}
+										</td>
+										<td
+											className={
+												data.oreLavorativeMinimeRaggiunte
+													? 'tante-ore'
+													: 'poche-ore'
+											}
+										>
+											{data.date}
+										</td>
+									</tr>
+								))}
 							</table>
 						</div>
 					</div>
