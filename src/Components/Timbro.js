@@ -1,4 +1,5 @@
 import { getAuth } from 'firebase/auth';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -7,7 +8,7 @@ import { db } from './Firebase';
 const Timbro = ({ isLogged }) => {
 	const [giornate, setGiornate] = useState([]);
 
-	const d = new Date().toLocaleDateString();
+	let d = moment().format('l');
 	const Ref = db
 		.collection('users')
 		.doc(getAuth().currentUser.email)
@@ -31,12 +32,14 @@ const Timbro = ({ isLogged }) => {
 	}, []);
 
 	const checkEntrata = () => {
-		let d = new Date().toLocaleDateString();
-		let time = new Date().toLocaleTimeString();
+		let d = moment().format('l');
+		let time = moment().format('h:mm:ss a');
 
 		Ref.get().then((docSnapshot) => {
 			if (docSnapshot.exists) {
 				console.log('Gia timbrato');
+				console.log(d);
+				console.log(time);
 			} else {
 				db.collection('users')
 					.doc(getAuth().currentUser.email)
@@ -58,14 +61,16 @@ const Timbro = ({ isLogged }) => {
 	};
 
 	const checkUscita = async () => {
-		let d = new Date().toLocaleDateString();
-		let time = new Date().toLocaleTimeString();
+		let d = moment().format('l');
+		let time = moment().format('h:mm:ss a');
 		let oreSuperate;
 
 		Ref.get().then((docSnapshot) => {
 			console.log(docSnapshot);
 			if (docSnapshot.get('orarioUscita') !== 0) {
 				console.log('Gia timbrato');
+				console.log(d);
+				console.log(time);
 			} else {
 				let orarioEntrata = docSnapshot.get('orarioEntrata');
 				let oreLavorate =
