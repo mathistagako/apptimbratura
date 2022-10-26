@@ -111,7 +111,6 @@ const Timbro = ({ isLogged }) => {
 									Timbra cartellino uscita
 								</button>
 							</p>
-							<br />
 							<table
 								id="datiTimbri"
 								width="600"
