@@ -30,9 +30,31 @@ export default function App() {
 	// }, []);
 
 	const signIn = (email, password) => {
-		auth
-			.signInWithEmailAndPassword(email, password)
-			.catch((error) => alert(error));
+		//FIREBASE
+
+		// auth
+		// 	.signInWithEmailAndPassword(email, password)
+		// 	.catch((error) => alert(error));
+
+		//LARAVEL-DOCKER
+
+		axios
+			.post('http://localhost/login', {
+				email: email,
+				password: password,
+			})
+			.then((response) => {
+				if (JSON.stringify(response.data) === '1') {
+					console.log(response.data);
+					setIsLogged(true);
+				} else {
+					console.log(response.data);
+					console.log('Utente o password inesistente');
+				}
+			})
+			.catch((error) => {
+				console.log('ERROR:: ', error.response.data);
+			});
 	};
 
 	const register = (email, password) => {
