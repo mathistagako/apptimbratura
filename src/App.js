@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
 	createUserWithEmailAndPassword,
 	getAuth,
@@ -17,16 +18,16 @@ export default function App() {
 	const navigate = useNavigate();
 	const [isLogged, setIsLogged] = useState(false);
 
-	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged((authUser) => {
-			if (authUser) {
-				navigate('/timbro');
-				setIsLogged(true);
-			}
-		});
+	// useEffect(() => {
+	// 	const unsubscribe = auth.onAuthStateChanged((authUser) => {
+	// 		if (authUser) {
+	// 			navigate('/timbro');
+	// 			setIsLogged(true);
+	// 		}
+	// 	});
 
-		return unsubscribe;
-	}, []);
+	// 	return unsubscribe;
+	// }, []);
 
 	const signIn = (email, password) => {
 		auth
@@ -35,12 +36,26 @@ export default function App() {
 	};
 
 	const register = (email, password) => {
-		auth.createUserWithEmailAndPassword(email, password).then((response) => {
-			console.log(response);
-			db.collection('users').doc(email).set({
+		//FIREBASE
+
+		// auth.createUserWithEmailAndPassword(email, password).then((response) => {
+		// 	console.log(response);
+		// 	db.collection('users').doc(email).set({
+		// 		email: email,
+		// 	});
+		// });
+
+		//LARAVEL-DOCKER
+
+		axios
+			.post('http://localhost/register', {
 				email: email,
+				password: password,
+			})
+			.then((response) => console.log(JSON.stringify(response.data)))
+			.catch((error) => {
+				console.log('ERROR:: ', error.response.data);
 			});
-		});
 	};
 
 	const logout = () => {

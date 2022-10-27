@@ -5,10 +5,10 @@ const Registrazione = ({ register }) => {
 	const [password, setPassword] = useState('');
 
 	const handleChange = (event) => {
-		if (event.target.name === 'Email') {
+		if (event.target.name === 'email') {
 			setEmail(event.target.value);
 		}
-		if (event.target.name === 'Password') {
+		if (event.target.name === 'password') {
 			setPassword(event.target.value);
 		}
 	};
@@ -21,7 +21,7 @@ const Registrazione = ({ register }) => {
 					<div class="subtitle">Crea il tuo account</div>
 					<div class="input-container ic1">
 						<input
-							name="Email"
+							name="email"
 							type="text"
 							class="input"
 							placeholder=" "
@@ -35,7 +35,7 @@ const Registrazione = ({ register }) => {
 					</div>
 					<div class="input-container ic2">
 						<input
-							name="Password"
+							name="password"
 							class="input"
 							type="password"
 							placeholder=" "
