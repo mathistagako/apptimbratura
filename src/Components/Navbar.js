@@ -1,7 +1,7 @@
 import { getAuth } from 'firebase/auth';
 import React from 'react';
 
-const Navbar = ({ isLogged, logout }) => {
+const Navbar = ({ isLogged, logout, email }) => {
 	return (
 		<nav class="header">
 			<p class="logo">
@@ -10,7 +10,7 @@ const Navbar = ({ isLogged, logout }) => {
 			<ul class="main-nav">
 				{isLogged ? (
 					<li>
-						<a>{getAuth().currentUser.email}</a>
+						<a>{email}</a>
 					</li>
 				) : null}
 				{isLogged ? (
