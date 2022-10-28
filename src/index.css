@@ -78,11 +78,11 @@ nav ul li a:hover {
 	.header {
 		width: 100%;
 		margin: 0 auto;
-		max-width: 1500px;
+		max-width: 2000px;
 	}
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 700px) {
 	.header {
 		flex-direction: row;
 		justify-content: space-between;
