@@ -202,6 +202,7 @@ const Timbro = ({ isLogged, email }) => {
 													{orarioUscita === '0' ? '' : orarioUscita}
 												</td>
 												<td
+													style={{ padding: '5px' }}
 													className={
 														oreLavorativeRaggiunte === null
 															? ''
