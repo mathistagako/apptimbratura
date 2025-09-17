@@ -1,70 +1,204 @@
-# Getting Started with Create React App
+# Timbratura – Employee Work Time Tracking Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Timbratura is a web-based application for tracking employee work hours through check-in/check-out (timbratura) records. The system is split into a backend API (LaravelTimbratura) and a frontend app (apptimbratura), working together to allow employees to log their attendance and managers to review time records.
 
-## Available Scripts
+> ⚠️ **Work in Progress**: Both parts are currently in active development, and certain features (like secure authentication) are not yet fully implemented.
 
-In the project directory, you can run:
+## Architecture Overview
 
-### `npm start`
+- **Backend**: Laravel-based RESTful API (`LaravelTimbratura`)
+- **Frontend**: React-based single-page application (`apptimbratura`)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Backend (LaravelTimbratura)
 
-### `npm test`
+### Overview
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+LaravelTimbratura is a Laravel-based backend project that provides a RESTful API for the time tracking application. It handles data management, business logic, and database interactions for employee records and attendance logs.
 
-### `npm run build`
+> ⚠️ **Security Notice**: Authentication is rudimentary at this stage – passwords are not hashed or encrypted in this early version, which is a known security issue to be addressed.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Employee Records**: Maintains employee data (name, email/ID, and plaintext password for login)
+- **Login API**: Provides an endpoint to verify user credentials with simple password matching
+- **Clock-In/Clock-Out API**: Endpoints to record work session start and end times
+- **Attendance Logs**: Stores complete history of check-in and check-out events
+- **Basic Validation**: Input validation for API requests using Laravel's built-in features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Tech Stack & Dependencies
 
-### `npm run eject`
+- **Framework**: Laravel (PHP 8+)
+- **Database**: MySQL or MariaDB
+- **ORM**: Eloquent
+- **Date/Time**: Carbon library (included with Laravel)
+- **Security**: ⚠️ Plain text passwords (temporary - will be replaced with Laravel Hash)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Installation & Setup
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the repository**:
+   ```bash
+   git clone [repository-url]
+   cd LaravelTimbratura
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Install dependencies**:
+   ```bash
+   composer install
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Environment setup**:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   
+   Configure your `.env` file:
+   ```env
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   ```
 
-## Learn More
+4. **Run migrations**:
+   ```bash
+   php artisan migrate
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. **Seed initial data** (optional):
+   ```bash
+   php artisan db:seed
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+6. **Launch development server**:
+   ```bash
+   php artisan serve
+   ```
+   Server will run at `http://localhost:8000`
 
-### Code Splitting
+### API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/login` | Verify employee credentials |
+| `POST` | `/api/clock-in` | Record clock-in timestamp |
+| `POST` | `/api/clock-out` | Record clock-out timestamp |
+| `GET` | `/api/attendance` | Retrieve attendance records (planned) |
 
-### Analyzing the Bundle Size
+### CORS Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Ensure your `config/cors.php` allows requests from your frontend origin (e.g., `http://localhost:3000` for React development).
 
-### Making a Progressive Web App
+### Project Status and Roadmap
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Current Status**: Basic functionality implemented
 
-### Advanced Configuration
+**Upcoming Features**:
+- ✅ Secure password hashing (Laravel Hash/Bcrypt)
+- ✅ JWT or session-based authentication
+- ✅ User management and registration
+- ✅ Data reporting and analytics
+- ✅ Enhanced validation and error handling
+- ✅ Comprehensive testing suite
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Frontend (apptimbratura)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Overview
 
-### `npm run build` fails to minify
+The apptimbratura repository contains the frontend application providing a user-friendly interface for employees to log in and record their check-in/check-out times. Built as a single-page application (SPA) using React.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Features
+
+- **Login Screen**: Simple credential-based authentication
+- **Clock-In/Clock-Out Interface**: One-click time logging with instant feedback
+- **Status Display**: Real-time confirmation of actions and current status
+- **Attendance Log View**: Basic view of recent attendance records (planned)
+- **Error Alerts**: User-friendly error messaging for failed operations
+
+### Tech Stack
+
+- **Framework**: React with JavaScript ES6+
+- **HTTP Client**: Fetch API or Axios
+- **Styling**: HTML5 and CSS3 (basic styling)
+- **State Management**: React hooks (useState, useEffect)
+- **Build Tool**: Create React App or Vite
+
+### Installation & Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone [repository-url]
+   cd apptimbratura
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+   > Requires Node.js 16+ and npm
+
+3. **Configure API connection**:
+   Update the API base URL in your configuration file:
+   ```javascript
+   // Example: .env or config file
+   REACT_APP_API_URL=http://localhost:8000
+   ```
+
+4. **Run development server**:
+   ```bash
+   npm start
+   ```
+   App will run at `http://localhost:3000`
+
+5. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+### Usage
+
+1. **Login**: Use test employee credentials (check backend seeder for demo accounts)
+2. **Clock In**: Click "Clock In" button to start work session
+3. **Clock Out**: Click "Clock Out" button to end work session
+4. **View Status**: See real-time confirmation of all actions
+
+### Demo Credentials
+
+If using seeded data:
+- Email: `test@example.com`
+- Password: `password`
+
+> ⚠️ Remove demo credentials in production
+
+### Project Status and Future Work
+
+**Current Status**: Basic functionality with simple UI
+
+**Planned Improvements**:
+- ✅ Secure authentication flow with tokens
+- ✅ Enhanced input validation and user feedback
+- ✅ Responsive UI/UX design for mobile devices
+- ✅ Comprehensive attendance records view
+- ✅ Role-based admin dashboard
+- ✅ Offline mode support (stretch goal)
+
+---
+
+## Development Notes
+
+### Session Management
+Currently, the frontend handles login state in memory only. Page refresh will require re-login until persistent authentication is implemented.
+
+### Error Handling
+Check browser console and Laravel logs for debugging. Common issues include:
+- CORS errors (backend not allowing frontend origin)
+- Network errors (incorrect API URL)
+- Authentication failures
+
+### Running Both Applications
+Ensure both backend (`php artisan serve`) and frontend (`npm start`) are running simultaneously for full functionality.
